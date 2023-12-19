@@ -62,6 +62,21 @@ And the combines them into different results
 
 Disclaimer: Had to really fight the urges the claim that *"it has no point, it is point free after all"*
 
+## MISC
+
+### What happens if I want to add a function that also take other values?
+
+That is actually allowed on the current code. The function will only take the first value as the replacement for the 
+current point, so it is possible to define oher values later.
+
+    @pointfree()
+    def multiply_by(point,x):
+        return point * x
+
+    print(foo + multiply_by(x=2) << 1 )
+
+    > RETURNS '4'    
+
 ### Are there other alternatives to this?
 
 Yes, there are other Python implementations of PointFree. Some of them are probably better than thi one, although I 
