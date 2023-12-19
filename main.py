@@ -116,9 +116,22 @@ def _pointfree(*args, uses_multiple_values=False, **kwargs):
         spec_args, spec_defaults, spec_kwargs = get_specs(func)
 
         if len(spec_args) == 0:
-            raise NotImplementedError("No implementation for function with only only-keywords args")
+            raise NotImplementedError(
+                "No implementation for function with only only-keywords args"
+            )
+
         if len(spec_defaults) < len(spec_args) - 1:
-            raise NotImplementedError("No implementation for function which requires multiple positional arguments")
+            dynamic_args = [*args, *kwargs.keys()]
+            if spec_args[0] in dynamic_args:
+                raise NotPointFreeError(
+                    "Can not define point argument as a keyword"
+                )
+            defaultless_args = spec_args[0:-len(spec_defaults)] if len(spec_defaults) != 0 else spec_args
+            no_default_or_keyword = [ar for ar in defaultless_args if ar not in dynamic_args]
+            if len(no_default_or_keyword) > 1:
+                raise NotImplementedError(
+                    "No implementation for function which requires multiple positional arguments"
+                )
         _wrapped_function = func if len(args) == 0 and len(kwargs) == 0 else partial(func, *args, **kwargs)
         return PointFreeFunction(f_name=_name, f_function=_wrapped_function, f_multi=uses_multiple_values)
 
@@ -150,7 +163,7 @@ def pointfree(*args, uses_multiple_values=False, request_redefinitions=False, **
     def inner(func):
         if len(args) == 0 and len(kwargs) == 0:
             spec_args, spec_defaults, spec_kwargs = get_specs(func)
-            if request_redefinitions or ("point" not in spec_kwargs and len(spec_defaults) < len(spec_args) - 1):
+            if request_redefinitions or (len(spec_defaults) < len(spec_args) - 1):
                 return _pointfree_with_vars(*args, use_multiple_values=uses_multiple_values, **kwargs)(func)
         return _pointfree(*args, uses_multiple_values=uses_multiple_values, **kwargs)(func)
 
