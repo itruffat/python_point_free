@@ -1,1 +1,1 @@
-from  main import pointfree, _pointfree, _pointfree_with_vars, PointFreeFunction, NotPointFreeError, InvalidCombinationError
+from .main import pointfree, _pointfree, _pointfree_with_vars, PointFreeFunction, NotPointFreeError, InvalidCombinationError
