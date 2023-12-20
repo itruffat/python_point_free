@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='PythonFreePoint',
-    version='0.0.0a1',
+    version='0.0.0a2',
     author='itrufat',
     description='Free Point Style for Python',
     long_description='A library that seamlessly integrates `Free Point Style` into Python3.',
