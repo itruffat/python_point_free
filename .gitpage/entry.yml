@@ -1,0 +1,5 @@
+name: Python Free Point
+category: python-utility 
+skip: False
+description : Small library that provides a decorator to use FreePoint-like Syntax in Python natively.
+
